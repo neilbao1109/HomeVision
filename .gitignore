@@ -1,0 +1,8 @@
+# HomeVision output
+homevision_output/
+*.pt
+
+# Python
+__pycache__/
+*.pyc
+.venv/

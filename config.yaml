@@ -1,0 +1,56 @@
+# HomeVision - 监控视频有意义画面提取配置
+
+# 运动检测
+motion:
+  # 采样间隔（秒），每隔多久取一帧做分析，降低可加速但可能漏掉短暂事件
+  sample_interval: 0.5
+  # 运动检测阈值（0-100），像素变化面积占比超过此值视为有运动
+  # 越低越敏感（能捕捉小动物），越高只抓大动作
+  threshold: 0.5
+  # 高斯模糊核大小（奇数），用于去噪，越大越平滑
+  blur_kernel: 21
+  # 二值化阈值，帧差灰度超过此值视为变化像素
+  binary_threshold: 25
+
+# 目标检测 (YOLOv8)
+detection:
+  # 模型选择: yolov8n (最快) / yolov8s (平衡) / yolov8m (更准)
+  # M4 Max 建议用 yolov8s，速度和精度都不错
+  model: yolov8s
+  # 检测置信度阈值
+  confidence: 0.35
+  # 感兴趣的目标类别 (COCO 类别名)
+  # 完整列表: person, bicycle, car, motorcycle, cat, dog, bird, horse, sheep, cow, elephant, bear, ...
+  target_classes:
+    - person
+    - cat
+    - dog
+    - bird
+    - horse
+    - sheep
+    - cow
+    - bear
+    - elephant
+
+# 输出
+output:
+  # 输出目录名（在输入目录同级创建）
+  dir_name: "homevision_output"
+  # 图片质量 (1-100)
+  jpeg_quality: 95
+  # 是否在图片上画检测框
+  draw_boxes: true
+  # 同一场景连续检测到目标时的去重间隔（秒）
+  # 在此间隔内只保留第一帧，避免同一个人站着不动产生大量重复截图
+  dedup_interval: 3.0
+  # 是否同时保存无标注的原始帧
+  save_raw: false
+
+# 性能
+performance:
+  # 批量处理视频数的并发数（每个视频串行处理帧）
+  # M4 Max 建议 1-2，YOLO 本身已经很吃资源
+  workers: 1
+  # YOLO 推理设备: "mps" (Apple Silicon GPU) / "cpu"
+  # M4 Max 强烈建议 mps
+  device: "mps"
