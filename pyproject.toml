@@ -1,0 +1,15 @@
+[project]
+name = "homevision"
+version = "0.1.0"
+description = "监控视频有意义画面提取工具"
+requires-python = ">=3.10"
+dependencies = [
+    "opencv-python>=4.8.0",
+    "ultralytics>=8.2.0",
+    "Pillow>=10.0.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.65.0",
+]
+
+[project.scripts]
+homevision = "homevision:main"

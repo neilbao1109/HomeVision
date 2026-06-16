@@ -12,24 +12,34 @@
 2. **目标识别**：对有运动的帧用 YOLO 检测人/动物等目标，过滤掉光线变化等误报
 3. **智能去重**：同一场景连续检测只保留一张代表帧
 
-## 安装
+## 安装 & 运行
+
+### 推荐：使用 uv（零配置，自动管理虚拟环境）
+
+```bash
+# 安装 uv（如果还没装）
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 一键运行（uv 自动创建 venv、安装依赖、执行脚本）
+uv run homevision.py ~/surveillance/
+
+# 处理单个视频
+uv run homevision.py ~/surveillance/video.mov
+
+# 指定输出目录
+uv run homevision.py ~/surveillance/ -o ~/output/
+```
+
+> `uv run` 会自动读取 `pyproject.toml` 中的依赖，首次运行时创建 `.venv` 并安装，后续直接复用。无需手动 `pip install`。
+
+### 备选：手动 pip
 
 ```bash
 # Python 3.10+
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-```
-
-## 快速开始
-
-```bash
-# 处理一个目录下所有视频
 python homevision.py ~/surveillance/
-
-# 处理单个视频
-python homevision.py ~/surveillance/video.mov
-
-# 指定输出目录
-python homevision.py ~/surveillance/ -o ~/output/
 ```
 
 ## 常用选项
